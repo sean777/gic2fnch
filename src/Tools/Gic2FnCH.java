@@ -46,7 +46,7 @@ public class Gic2FnCH {
                 }
                 
                 if(Tools.isTerminal(parteB)) {
-                    chomsky += parteB;
+                    chomsky += parteB + "|";
                 } else {
                     chomsky +=  "{" + parteB + "}|";
                     
@@ -73,7 +73,7 @@ public class Gic2FnCH {
                 definidos.add(list.get(i).getChomskyStr() + "->" + Tools.getStringBtwn(list.get(i).getChomskyStr()));
                 list.get(i).setDefined(true);
                 
-            } else {            // Proceso hediondo:
+                } else {            // Proceso hediondo:
                 
                 list.get(i).setDefined(true);
                 parteA = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(0, Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2);

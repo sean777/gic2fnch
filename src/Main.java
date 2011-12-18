@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import Tools.*;
-import javax.swing.JOptionPane;
 public class Main {
     public static void main(String[] args) {
         
@@ -28,21 +27,17 @@ public class Main {
         }
         
         Gic2FnCH gic2fnch = new Gic2FnCH();
-        gic2fnch.generate(producciones.get(0));
-        JOptionPane.showMessageDialog(null, gic2fnch.getChomskyForm());
-        
-        for(String x : gic2fnch.getChomskyList()) {
-            System.out.println(x);
+        for(byte i = 0; i < producciones.size(); i++) {
+            System.out.println("Chomsky para la gic [ " + producciones.get(i) + " ]");
+            gic2fnch.generate(producciones.get(i));
+            System.out.println("Resultado: " + gic2fnch.getChomskyForm());
+            System.out.println("Producciones: ");
+            for(String s : gic2fnch.getChomskyList()) {
+                System.out.println(s);
+            }
+            System.out.println("--------------------------------------------------------\n");
         }
         
-        gic2fnch.generate(producciones.get(1));
-        JOptionPane.showMessageDialog(null, gic2fnch.getChomskyForm());
-        
-        for(String x : gic2fnch.getChomskyList()) {
-            System.out.println(x);
-        }
-        
-        
-    } // Fin del main
+    }
     
 }
