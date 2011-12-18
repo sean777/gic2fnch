@@ -1,5 +1,6 @@
 /* @author Leonardo Gutiérrez Ramírez <leogutierrezramirez.gmail.com> */
 /* Dec 16, 2011 */
+
 /* Contiene la cadena y el orden en que aparece en la primera transformación a Chomsky */
 package Tools;
 
