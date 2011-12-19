@@ -9,6 +9,11 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import Tools.*;
+
+/**
+ * Aplicación de prueba del algoritmo.
+ * @author Leonardo Gutiérrez Ramírez <leogutierrezramirez.gmail.com>
+ */
 public class Main {
     public static void main(String[] args) {
         

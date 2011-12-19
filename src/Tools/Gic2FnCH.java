@@ -5,6 +5,13 @@ package Tools;
 
 import java.util.ArrayList;
 
+/**
+ * Algoritmo que teniendo una cadena en la forma
+ * S->a|aaB|Bab, devuelve la forma normal de Chomsky correspondiente.
+ * @author Leonardo Gutiérrez Ramírez | leogutierrezramirez@gmail.com <a href="mailto:leogutierrezramirez@gmail.com">Leonardo Gutiérrez Ramírez</a>
+ * @version 1.0
+ */
+
 public class Gic2FnCH {
     
     private String chomsky;
@@ -13,6 +20,9 @@ public class Gic2FnCH {
     private String finalS;
     private ArrayList<String> chomskyList = null;
     
+    /**
+     * Constructor predeterminado.
+     */
     public Gic2FnCH() {
         chomsky = "";
         parteA = "";
@@ -21,6 +31,12 @@ public class Gic2FnCH {
         chomskyList = new ArrayList<String>();
     }
     
+    /**
+     * El siguiente método genera la forma normal de Chomsky basado en un String.
+     * Para ver el resultado ejecute el método getChomskyForm().
+     * 
+     * @param gic 
+     */
     public void generate(String gic) {
         
         chomsky = "";
@@ -73,13 +89,13 @@ public class Gic2FnCH {
                 definidos.add(list.get(i).getChomskyStr() + "->" + Tools.getStringBtwn(list.get(i).getChomskyStr()));
                 list.get(i).setDefined(true);
                 
-                } else {            // Proceso hediondo:
+                } else {
                 
                 list.get(i).setDefined(true);
                 parteA = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(0, Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2);
                 parteB = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2, Tools.getStringBtwn(list.get(i).getChomskyStr()).length());
                 
-                if(Tools.isTerminal(parteA)) { // [A-Z]$
+                if(Tools.isTerminal(parteA)) {
                     finalS += parteA;
                 } else {
                     finalS += "{" + parteA + "}";
@@ -89,7 +105,7 @@ public class Gic2FnCH {
                     }
                 }
                 
-                if(Tools.isTerminal(parteB)) { // [A-Z]$
+                if(Tools.isTerminal(parteB)) {
                     finalS += parteB;
                 } else {
                     finalS += "{" + parteB + "}";
@@ -115,15 +131,23 @@ public class Gic2FnCH {
         this.chomskyList = definidos;
     }
     
+    /**
+     * Devuelve las definiciones basándose en la forma normal de chomsky generada
+     * @return ArrayList<String>
+     */
     public ArrayList<String> getChomskyList() {
         return chomskyList;
     }
     
+    /**
+     * Devuelve la forma normal de chomsky después de haberla generado con el método generate().
+     * @return String
+     */
     public String getChomskyForm() {
         return chomsky;
     }
     
-    public static boolean isListFull(ArrayList<Elemento> lista) {
+    private static boolean isListFull(ArrayList<Elemento> lista) {
         for(byte i = 0; i < lista.size(); i++) {
             if(lista.get(i).getDefined() == false) {
                 return false;
@@ -132,7 +156,7 @@ public class Gic2FnCH {
         return true;
     }
     
-    public static int getIndex(ArrayList<Elemento> lista) {
+    private static int getIndex(ArrayList<Elemento> lista) {
         for(byte i = 0; i < lista.size(); i++) {
             if(lista.get(i).getDefined() == false) {
                 return i;

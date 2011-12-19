@@ -1,9 +1,12 @@
 package Tools;
 
+/**
+ * Clase que contiene una hashtable.
+ * La hashtable usa como clave o key un String, y como valor un Elemento
+ * Un Elemento contiene un String y un booleano que indica si cada definición está ya definida, valga la redundancia.
+ */
 import java.util.Hashtable;
 
-/* @author Leonardo Gutiérrez Ramírez <leogutierrezramirez.gmail.com> */
-/* Dec 16, 2011 */
 public class Tabla {
     
     public Hashtable tabla;
