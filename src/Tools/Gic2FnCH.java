@@ -35,6 +35,9 @@ public class Gic2FnCH {
      * El siguiente método genera la forma normal de Chomsky basado en un String.
      * Para ver el resultado ejecute el método getChomskyForm().
      * 
+     * {.*} - Simbolo NO Terminal no definido, es decir, que no tiene FNCH
+     * [a-z] - Terminal
+     * 
      * @param gic 
      */
     public void generate(String gic) {
