@@ -14,20 +14,20 @@ import java.util.ArrayList;
 
 public class Gic2FnCH {
     
-    private String chomsky;
+    private StringBuilder chomsky;
     private String parteA;
     private String parteB;
-    private String finalS;
+    private StringBuilder finalS;
     private ArrayList<String> chomskyList = null;
     
     /**
      * Constructor predeterminado.
      */
     public Gic2FnCH() {
-        chomsky = "";
+        chomsky = new StringBuilder("");
+        finalS = new StringBuilder("");
         parteA = "";
         parteB = "";
-        finalS = "";
         chomskyList = new ArrayList<String>();
     }
     
@@ -42,22 +42,25 @@ public class Gic2FnCH {
      */
     public void generate(String gic) {
         
-        chomsky = "";
+        chomsky.delete(0, chomsky.length());
         ArrayList<Elemento> list = new ArrayList<Elemento>();
         ArrayList<String> definidos = new ArrayList<String>();
         Tabla tabla = new Tabla();
         
         for(String s : Tools.getCases(gic).split("\\|")) {
+            
             if(Tools.isChomsky(s)) {
-                chomsky += s + "|";
+                
+                chomsky.append(s).append("|");
+                
             } else {
                 parteA = s.substring(0, s.length()/2);
                 parteB = s.substring(s.length()/2, s.length());
                 
                 if(Tools.isTerminal(parteA)) {
-                    chomsky += parteA;
+                    chomsky.append(parteA);
                 } else {
-                    chomsky += "{" + parteA + "}";
+                    chomsky.append("{").append(parteA).append("}");
                     if(!tabla.tabla.containsKey("{" + parteA + "}")) {
                         tabla.put("{" + parteA + "}", new Elemento("{" + parteA + "}", false));
                         list.add(new Elemento("{" + parteA + "}", false));
@@ -65,9 +68,9 @@ public class Gic2FnCH {
                 }
                 
                 if(Tools.isTerminal(parteB)) {
-                    chomsky += parteB + "|";
+                    chomsky.append(parteB).append("|");
                 } else {
-                    chomsky +=  "{" + parteB + "}|";
+                    chomsky.append("{").append(parteB).append("}");
                     
                     if(!tabla.tabla.containsKey("{" + parteB + "}")) {
                         tabla.put("{" + parteB + "}", new Elemento("{" + parteB + "}", false));
@@ -77,12 +80,16 @@ public class Gic2FnCH {
             }
         }
         
-        chomsky = chomsky.substring(0, chomsky.length() - 1);
+        StringBuilder temp = new StringBuilder(chomsky.substring(0, chomsky.length() - 1));
+        chomsky.delete(0, chomsky.length());
+        chomsky.append(temp.toString());
+                //chomsky = chomsky.substring(0, chomsky.length() - 1);
+        
         setChomsky(Tools.getNameProduction(gic) + " --> " + chomsky);
         
         int i = 0;
         while(isListFull(list) == false) {
-                finalS = "";
+                finalS.delete(0, finalS.length());
                 parteA = "";
                 parteB = "";
             
@@ -99,9 +106,9 @@ public class Gic2FnCH {
                 parteB = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2, Tools.getStringBtwn(list.get(i).getChomskyStr()).length());
                 
                 if(Tools.isTerminal(parteA)) {
-                    finalS += parteA;
+                    finalS.append(parteA);
                 } else {
-                    finalS += "{" + parteA + "}";
+                    finalS.append("{").append(parteA).append("}");
                     if(!tabla.tabla.containsKey("{" + parteA + "}")) {
                         tabla.put("{" + parteA + "}", new Elemento("{" + parteA + "}", false));
                         list.add(new Elemento("{" + parteA + "}", false));
@@ -109,9 +116,9 @@ public class Gic2FnCH {
                 }
                 
                 if(Tools.isTerminal(parteB)) {
-                    finalS += parteB;
+                    finalS.append(parteB);
                 } else {
-                    finalS += "{" + parteB + "}";
+                    finalS.append("{").append(parteB).append("}");
                     if(!tabla.tabla.containsKey("{" + parteB + "}")) {
                         tabla.put("{" + parteB + "}", new Elemento("{" + parteB + "}", false));
                         list.add(new Elemento("{" + parteB + "}", false));
@@ -127,7 +134,7 @@ public class Gic2FnCH {
     }
     
     private void setChomsky(String s) {
-        this.chomsky = s;
+        this.chomsky = new StringBuilder(s);
     }
     
     private void setChomskyList(ArrayList<String> definidos) {
@@ -147,7 +154,7 @@ public class Gic2FnCH {
      * @return String
      */
     public String getChomskyForm() {
-        return chomsky;
+        return chomsky.toString();
     }
     
     private static boolean isListFull(ArrayList<Elemento> lista) {
