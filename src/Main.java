@@ -5,14 +5,20 @@
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import Tools.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Aplicación de prueba del algoritmo.
  * @author Leonardo Gutiérrez Ramírez <leogutierrezramirez.gmail.com>
+ * 
+ * Los resultados se muestran en el archivo "out.txt"
+ * 
  */
 public class Main {
     public static void main(String[] args) {
@@ -32,15 +38,26 @@ public class Main {
         }
         
         Gic2FnCH gic2fnch = new Gic2FnCH();
-        for(byte i = 0; i < producciones.size(); i++) {
-            System.out.println("Chomsky para la gic [ " + producciones.get(i) + " ]");
-            gic2fnch.generate(producciones.get(i));
-            System.out.println("Resultado: " + gic2fnch.getChomskyForm());
-            System.out.println("Producciones: ");
-            for(String s : gic2fnch.getChomskyList()) {
-                System.out.println(s);
+        try {
+            File fileOut = new File("out.txt");
+            FileWriter fw = new FileWriter(fileOut);
+            
+            for(byte i = 0; i < producciones.size(); i++) {
+                fw.write("Chomsky para la gic [ " + producciones.get(i) + " ]\n");
+                gic2fnch.generate(producciones.get(i));
+                fw.write("Resultado: " + gic2fnch.getChomskyForm() + "\n");
+                fw.write("Producciones: \n");
+                for(String s : gic2fnch.getChomskyList()) {
+                    fw.write(s + "\n");
+                }
+                fw.write("--------------------------------------------------------\n");
             }
-            System.out.println("--------------------------------------------------------\n");
+            
+            fw.flush();
+            fw.close();
+            
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
         }
         
     }
