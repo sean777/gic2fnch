@@ -24,7 +24,9 @@ public class Main {
     public static void main(String[] args) {
         
         ArrayList<String> producciones = new ArrayList<String>();
+        
         try {
+            
             FileInputStream fstream = new FileInputStream("gic.txt");
             DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -33,16 +35,20 @@ public class Main {
                 producciones.add(strLine);
             }
             in.close();
+            
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
         
         Gic2FnCH gic2fnch = new Gic2FnCH();
+        
         try {
+        
             File fileOut = new File("out.txt");
             FileWriter fw = new FileWriter(fileOut);
             
             for(byte i = 0; i < producciones.size(); i++) {
+            
                 fw.write("Chomsky para la gic [ " + producciones.get(i) + " ]\n");
                 gic2fnch.generate(producciones.get(i));
                 fw.write("Resultado: " + gic2fnch.getChomskyForm() + "\n");
@@ -51,6 +57,7 @@ public class Main {
                     fw.write(s + "\n");
                 }
                 fw.write("--------------------------------------------------------\n");
+                
             }
             
             fw.flush();
@@ -59,7 +66,5 @@ public class Main {
         } catch(IOException e) {
             System.out.println(e.getMessage());
         }
-        
     }
-    
 }

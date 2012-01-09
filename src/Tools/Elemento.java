@@ -25,7 +25,7 @@ public class Elemento {
     }
     
     /**
-     * @return 
+     * @return boolean
      */
     public boolean getDefined() {
         return definido;

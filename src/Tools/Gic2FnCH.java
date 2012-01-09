@@ -58,18 +58,23 @@ public class Gic2FnCH {
                 parteB = s.substring(s.length()/2, s.length());
                 
                 if(Tools.isTerminal(parteA)) {
+                    
                     chomsky.append(parteA);
+                    
                 } else {
+                    
                     chomsky.append("{").append(parteA).append("}");
                     if(!tabla.tabla.containsKey("{" + parteA + "}")) {
                         tabla.put("{" + parteA + "}", new Elemento("{" + parteA + "}", false));
                         list.add(new Elemento("{" + parteA + "}", false));
                     }
+                    
                 }
                 
                 if(Tools.isTerminal(parteB)) {
                     chomsky.append(parteB).append("|");
                 } else {
+                    
                     chomsky.append("{").append(parteB).append("}");
                     
                     if(!tabla.tabla.containsKey("{" + parteB + "}")) {
@@ -83,50 +88,59 @@ public class Gic2FnCH {
         StringBuilder temp = new StringBuilder(chomsky.substring(0, chomsky.length() - 1));
         chomsky.delete(0, chomsky.length());
         chomsky.append(temp.toString());
-                //chomsky = chomsky.substring(0, chomsky.length() - 1);
         
         setChomsky(Tools.getNameProduction(gic) + " --> " + chomsky);
         
         int i = 0;
         while(isListFull(list) == false) {
+            
                 finalS.delete(0, finalS.length());
                 parteA = "";
                 parteB = "";
             
                 if(Tools.isChomsky(Tools.getStringBtwn(list.get(i).getChomskyStr()))) {
                 
-                // Agregar a los definidos
-                definidos.add(list.get(i).getChomskyStr() + "->" + Tools.getStringBtwn(list.get(i).getChomskyStr()));
-                list.get(i).setDefined(true);
+                    // Agregar a los definidos
+                    definidos.add(list.get(i).getChomskyStr() + "->" + Tools.getStringBtwn(list.get(i).getChomskyStr()));
+                    list.get(i).setDefined(true);
                 
                 } else {
                 
-                list.get(i).setDefined(true);
-                parteA = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(0, Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2);
-                parteB = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2, Tools.getStringBtwn(list.get(i).getChomskyStr()).length());
-                
-                if(Tools.isTerminal(parteA)) {
-                    finalS.append(parteA);
-                } else {
-                    finalS.append("{").append(parteA).append("}");
-                    if(!tabla.tabla.containsKey("{" + parteA + "}")) {
-                        tabla.put("{" + parteA + "}", new Elemento("{" + parteA + "}", false));
-                        list.add(new Elemento("{" + parteA + "}", false));
+                    list.get(i).setDefined(true);
+                    parteA = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(0, Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2);
+                    parteB = Tools.getStringBtwn(list.get(i).getChomskyStr()).substring(Tools.getStringBtwn(list.get(i).getChomskyStr()).length() / 2, Tools.getStringBtwn(list.get(i).getChomskyStr()).length());
+                    
+                    if(Tools.isTerminal(parteA)) {
+                        finalS.append(parteA);
+                    } else {
+                        
+                        finalS.append("{").append(parteA).append("}");
+                        
+                        if(!tabla.tabla.containsKey("{" + parteA + "}")) {
+                        
+                            tabla.put("{" + parteA + "}", new Elemento("{" + parteA + "}", false));
+                            list.add(new Elemento("{" + parteA + "}", false));
+                            
+                        }
                     }
-                }
                 
-                if(Tools.isTerminal(parteB)) {
-                    finalS.append(parteB);
-                } else {
-                    finalS.append("{").append(parteB).append("}");
-                    if(!tabla.tabla.containsKey("{" + parteB + "}")) {
-                        tabla.put("{" + parteB + "}", new Elemento("{" + parteB + "}", false));
-                        list.add(new Elemento("{" + parteB + "}", false));
+                    if(Tools.isTerminal(parteB)) {
+                        finalS.append(parteB);
+                    } else {
+                        
+                        finalS.append("{").append(parteB).append("}");
+                        
+                        if(!tabla.tabla.containsKey("{" + parteB + "}")) {
+                            
+                            tabla.put("{" + parteB + "}", new Elemento("{" + parteB + "}", false));
+                            list.add(new Elemento("{" + parteB + "}", false));
+                            
+                        }
                     }
+                    
+                    definidos.add(list.get(i).getChomskyStr() + "->" + finalS);
+                    
                 }
-                definidos.add(list.get(i).getChomskyStr() + "->" + finalS);
-                
-            }
             i = getIndex(list);
             
         }
